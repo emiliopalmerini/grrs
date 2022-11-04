@@ -1,7 +1,7 @@
 #![allow(unused)]
 
 use clap::Parser;
-use anyhow::{Context, Result};
+// use anyhow::{Context, Result};
 
 #[derive(Parser)]
 struct Cli {
