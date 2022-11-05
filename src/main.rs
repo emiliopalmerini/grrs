@@ -1,6 +1,9 @@
 #![allow(unused)]
 
+mod tests;
+
 use clap::Parser;
+use anyhow::{Context, Result};
 
 /// Search for a pattern in a file and display the lines that contain it.
 #[derive(Parser)]
@@ -14,12 +17,14 @@ struct Cli {
 #[derive(Debug)]
 struct CustomError(String);
 
-use anyhow::{Context, Result};
 
 fn main() -> Result<()> {
-    let path = "test.txt";
-    let content = std::fs::read_to_string(path)
-        .with_context(|| format!("could not read file `{}`", path))?;
-    println!("file content: {}", content);
+    let args = Cli::parse();
+    let content = std::fs::read_to_string(&args.path)
+        .with_context(|| format!("could not read file `{}`", args.path.display()))?;
+
+    grrs::find_matches(&content, &args.pattern, &mut std::io::stdout());
+
     Ok(())
 }
+
