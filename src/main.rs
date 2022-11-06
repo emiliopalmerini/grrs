@@ -1,7 +1,5 @@
 #![allow(unused)]
 
-mod tests;
-
 use clap::Parser;
 use anyhow::{Context, Result};
 
